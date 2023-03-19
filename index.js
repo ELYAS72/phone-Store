@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const path = require ('path'); // Importer le module 'path' de Node.js
 const bodyParser = require('body-parser');
+const cors = require('cors')
 const { engine } = require ('express-handlebars');
 const connectDB = require('./dbConfig');
+const { setNewContact } = require('./controller/contactController');
 const dotenv = require('dotenv').config();
 
 
@@ -16,8 +18,9 @@ connectDB();
 
 
 
-
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Configuration de Handlebars
@@ -43,11 +46,13 @@ app.get('/contact', (req, res) => {
   res.render('contact', {'contact': true});
 });
 
+app.post('/contact', setNewContact);
+
 
 
 
 
 
 app.listen(9000, () => {
-  console.log('Example app listening on http://localhost:9000');
+  console.log('Server ✅ http://localhost:9000');
 });

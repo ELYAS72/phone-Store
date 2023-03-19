@@ -1,20 +1,27 @@
-const Contact = require('../model/contactModel');
+const ContactModel = require('../model/contactModel');
 
-exports.newContact = async (req, res) => {
-  const { name, email, subject, message } = req.body;
+module.exports.setNewContact = async (req, res) => {
 
-  const contact = new Contact({
-    name,
-    email,
-    phone,
-    subject,
-    message
-  });
+  //if (!req.body.name || !req.body.email || !req.body.phone || !req.body.subject || !req.body.message) {
+  //  return res.status(400).json({message: "Veuillez remplir tous les champs obligatoires."});
+ // };
 
-  try {
-    await contact.save();
-    res.send('Votre message a été envoyé avec succès ✔️. Nous vous répondrons dans les meilleurs délais.');
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
+  
+  const contact = await ContactModel.create({
+
+
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      subject: req.body.subject,
+      message: req.body.message
+
+   
+
+
+  })
+  console.log(contact);
+
+  res.status(200).json(contact);
+  
 };
