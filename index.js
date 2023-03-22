@@ -46,6 +46,15 @@ app.get('/contact', (req, res) => {
   res.render('contact', {'contact': true});
 });
 
+app.get('/succes', (req, res) => {
+  res.render('succes', {'succes': true});
+});
+
+app.get('/error', (req, res) => {
+  res.render('error', {'error': true});
+});
+
+
 app.post('/contact', setNewContact);
 
 
