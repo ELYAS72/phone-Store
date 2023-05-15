@@ -4,16 +4,7 @@ const path = require ('path'); // Importer le module 'path' de Node.js
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const { engine } = require ('express-handlebars');
-const connectDB = require('./dbConfig');
 const { setNewContact } = require('./controller/contactController');
-const dotenv = require('dotenv').config();
-
-
-
-
-
-//connexion à la BDD
-connectDB();
 
 
 
@@ -32,6 +23,15 @@ app.set('views', './views');
 // Définition du dossier contenant les fichiers statiques
 app.use('/assets', express.static(path.join(__dirname, '/assets')));
 
+
+// parametrage sequelize
+const db = require('./dbConfig')
+try {
+    db.authenticate();
+    console.log('Connecté avec succès 🚀 ✅');
+  } catch (error) {
+    console.error('Quelque chose ne va pas ❌:', error);
+  }
 
 
 app.get('/', (req, res) => {

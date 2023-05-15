@@ -1,35 +1,29 @@
-const mongoose = require('mongoose');
+const { Sequelize, DataTypes } = require('sequelize');
+const db = require('../dbConfig');
 
-const contactSchema = new mongoose.Schema({
-
-  name: {
-    type: String,
-    trim: true
-  },
-
-  email: {
-    type: String,
-    trim: true
-  },
-
-  phone: {
-    type: String,
-    trim: true
-  },
-
-  subject: {
-    type: String, 
-    trim: true
-  },
-
-  message: {
-    type: String,
-    trim: true
-  }
+const contact = db.define("contact", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    fullName: {
+        type: DataTypes.STRING,
+    },
+    email: {
+        type: DataTypes.STRING,
+    },
+    phone: {
+        type: DataTypes.STRING,
+    },
+    subject: {
+        type: DataTypes.STRING
+    },
+    message: {
+        type: DataTypes.STRING
+    }
 });
 
+db.sync();
 
-
-
-module.exports = mongoose.model('Contact', contactSchema);
-
+module.exports = contact;
